@@ -1,0 +1,9 @@
+.env
+data/*
+!data/.gitkeep
+__pycache__/
+.venv/
+.env.*
+!.env.example
+.history/
+.DS_Store

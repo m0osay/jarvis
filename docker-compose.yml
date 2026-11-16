@@ -1,0 +1,22 @@
+services:
+  jarvis:
+    build: .
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/srv/data          # SQLite db + Google token live here, outside git
+    restart: unless-stopped
+    depends_on: [ntfy]
+
+  ntfy:
+    image: binwiederhier/ntfy
+    command: serve
+    environment:
+      - NTFY_BASE_URL=${NTFY_PUBLIC_URL:-http://localhost:8080}
+      - TZ=America/New_York
+    ports:
+      - "8080:80"
+    volumes:
+      - ./data/ntfy:/var/cache/ntfy
+    restart: unless-stopped
